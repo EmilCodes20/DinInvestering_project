@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>Investment Calculator</h1>
+
+  <form id="investmentForm">
+    <input type="number" id="initial" placeholder="Initial Investment" />
+    <input type="number" id="monthly" placeholder="Monthly Investment (optional)" />
+    <input type="number" id="rate" placeholder="Annual Rate of Return (%)" />
+    
+    <select id="years">
+      <!-- You can generate these with JS -->
+      <option value="1">1 year</option>
+      <option value="2">2 years</option>
+      <!-- ... -->
+      <option value="30">30 years</option>
+    </select>
+
+    <button type="submit">Calculate</button>
+  </form>
+
+  <div id="error-message" style="color: red; display: none;"></div>
+  <div id="result"></div>
+
+  <!-- ✅ Here's where your JS file is linked -->
+  <script src="script.js"></script>
+</body>
+</html>
