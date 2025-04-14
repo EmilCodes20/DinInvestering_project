@@ -3,31 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Investment Calculator</title>
+  <title>Din Investering</title>
   <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <h1>Investment Calculator</h1>
+</head>
+
+<body>
+  <h1>Din Investering</h1>
+  <div class="burger-menu">
+    <button id="burger-button" onclick="toggleMenu()">☰</button>
+    <div id="menu" class="hidden">
+      <ul>
+        <li><a href="/index.html">Startside</a></li>
+        <li><a href="/aktier">Aktier/ETF'er</a></li>
+        <li><a href="/viden">Viden</a></li>
+      </ul>
+    </div>
+  </div>
 
   <form id="investmentForm">
-    <input type="number" id="initial" placeholder="Initial Investment" />
-    <input type="number" id="monthly" placeholder="Monthly Investment (optional)" />
-    <input type="number" id="rate" placeholder="Annual Rate of Return (%)" />
+    <input type="number" id="initial" placeholder="Investering" />
+    <input type="number" id="monthly" placeholder="Månedlige indskud (optional)" />
+    <input type="number" id="rate" placeholder="Gns. årlige afkast (%)" />
     
     <select id="years">
       <!-- You can generate these with JS -->
       <option value="1">1 year</option>
       <option value="2">2 years</option>
-      <!-- ... -->
+      <option value="3">3 years</option>
+      <option value="4">4 years</option>
+      <option value="5">5 years</option>
+      <option value="10">10 years</option>
+      <option value="15">15 years</option>
+      <option value="20">20 years</option>
+      <option value="25">25 years</option>
       <option value="30">30 years</option>
     </select>
 
-    <button type="submit">Calculate</button>
+    <button type="submit"; id="calculateButton">Calculate</button>
   </form>
 
   <div id="error-message" style="color: red; display: none;"></div>
-  <div id="result"></div>
+  
+  <div class="chart-container">
+  <canvas id="investmentChart" width="600" height="400"></canvas>
+</div>
+<div class="output-container">
+  <p id="result">0.00</p>
+</div>
 
   <!-- ✅ Here's where your JS file is linked -->
   <script src="script.js"></script>

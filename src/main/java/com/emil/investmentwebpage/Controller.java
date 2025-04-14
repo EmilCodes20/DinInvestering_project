@@ -3,6 +3,8 @@ package com.emil.investmentwebpage;
 // Det her er altså hvor vi ligesom "griber" dataene og benytter logikken på den.
 // Ligeledes er det også her, vi "sender bolden retur" ved benytte vores logik i CalcInvestment
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,5 +33,16 @@ public class Controller {
         return calcInvestment.calculateFutureValue(initial, monthly, rate, years);
         
     }
+
+    
+    @GetMapping("/api/invest/growth")
+    @ResponseBody
+    public List<Double> getGrowthData(@RequestParam double initial,
+                                  @RequestParam double monthly,
+                                  @RequestParam double rate,
+                                  @RequestParam int years) {
+    return calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
+    }
+
     
 }
