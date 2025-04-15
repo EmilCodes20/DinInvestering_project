@@ -1,6 +1,24 @@
+h1, h2{
+    font-family: 'Inter', 'Roboto', sans-serif;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+  padding: 5px;
+    border-radius: 6px;
+}
+
+body, html {
+    background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    background-color: #f7f7f7;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
   }
   /* Fjerner grimme pile in Chrome, Safari, Edge */
 input::-webkit-outer-spin-button,
@@ -14,69 +32,83 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* Styling af input boksene */
-input, select {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1em;
+/* Form container style */
+#investmentForm {
+    display: flex;
+    flex-direction: column;  /* Align inputs vertically */
+    align-items: flex-start;  /* Align the inputs to the left */
+    width: 300px;
+    margin-bottom: 20px;
   }
 
+/* Styling af input boksene */
+#investmentForm input, select, button {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  #investmentForm button {
+    background-color: #4F46E5; /* Indigo 600 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #investmentForm button:hover {
+    background-color: #4338CA; /* Indigo 700 on hover */
+  }
 
 /* Dette bruges til style min graf - hvor stor den skal være, hvor den skal være etc.*/
 .chart-container {
-    width: 600px;
-    height: 600px;
-    margin-right: 30px;
-    text-align: left;
-}
+    width: 750px;
+    height: 750px;
+    margin-left: 20px;
+  }
 
-.output-container {
-    font-size: 2rem;
-    font-weight: bold;
-    color: whitesmoke;
-    margin-top: 20px;
-}
+  .container {
+    display: flex;
+    justify-content: space-between;  /* This will place form and chart next to each other */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
 
 #result {
-    font-size: 2.5rem;
-    color: green;
+    font-size: 50px;
+    color: #333;
     font-weight: bold;
-    margin-top: 10px;
-}
-button {
-    padding: 10px 20px; /* Add padding */
-    font-size: 1.2rem; /* Increase font size */
-    color: white; /* Text color */
-    background-color: #4CAF50; /* Green background */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Round corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth hover transition */
+    margin-bottom: 20px;
   }
-  
-  button:hover {
-    background-color: #45a049; /* Darker green when hovered */
-  }
+
   /* Style the burger button */
   .burger-menu {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 5px;  /* Pushes it nicely below h1/h2 */
+    padding: 5px;
+    border-radius: 6px;
+    background-color: #f4f4f9;
   }
   
   #burger-button {
     font-size: 24px;
-    background-color: black;
-    color: white;
+    background-color: #f4f4f9;
+    color: black;
     border: none;
     padding: 10px;
     cursor: pointer;
+    text-align: left;
   }
   
   #menu {
     margin-top: 10px;
-    background-color: #f4f4f4;
+    background-color: #f4f4f9;
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 6px;
@@ -84,14 +116,17 @@ button {
   
   #menu ul {
     list-style: none;
+    background-color: #f4f4f9;
     padding-left: 0;
   }
   
   #menu li {
     margin-bottom: 10px;
+    background-color: #f4f4f9;
   }
   
   #menu a {
+    background-color: #f4f4f9;
     text-decoration: none;
     color: #333;
   }

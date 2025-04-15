@@ -6,11 +6,15 @@
   <title>Din Investering</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
-  <h1>Din Investering</h1>
+  <div>
+  <h1>DinInvestering.dk</h1>
+  <h2>Investering</h2>
+</div>
   <div class="burger-menu">
     <button id="burger-button" onclick="toggleMenu()">☰</button>
     <div id="menu" class="hidden">
@@ -22,13 +26,13 @@
     </div>
   </div>
 
+  <div class="container">
   <form class="fade" id="investmentForm">
     <input type="number" id="initial" placeholder="Investering" />
     <input type="number" id="monthly" placeholder="Månedlige indskud (optional)" />
     <input type="number" id="rate" placeholder="Gns. årlige afkast (%)" />
     
     <select id="years">
-      <!-- You can generate these with JS -->
       <option value="1">1 year</option>
       <option value="2">2 years</option>
       <option value="3">3 years</option>
@@ -42,15 +46,15 @@
     </select>
 
     <button type="submit"; id="calculateButton">Calculate</button>
+    <p id="result">0.00</p>
   </form>
 
   <div id="error-message" style="color: red; display: none;"></div>
   
   <div class="chart-container">
   <canvas id="investmentChart" width="600" height="400"></canvas>
-</div>
-<div class="output-container fade">
-  <p id="result">0.00</p>
+  </div>
+
 </div>
 
   <!-- ✅ Here's where your JS file is linked -->
