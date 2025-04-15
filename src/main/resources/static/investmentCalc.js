@@ -37,6 +37,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  function fetchData(initial, monthly, rate, years) {
+    // Encode the inputs
+    const initialEncoded = encodeURIComponent(initial);
+    const monthlyEncoded = encodeURIComponent(monthly);
+    const rateEncoded = encodeURIComponent(rate);
+  
+    fetch(`/api/invest?initial=${initialEncoded}&monthly=${monthlyEncoded}&rate=${rateEncoded}&years=${years}`)
+      .then(response => response.text())
+      .then(result => {
+
+        // Her formatteres resultater til DKK og der skabes både tusind og mio. separatere
+        const formattedResult = parseFloat(result).toLocaleString('da-DK', {
+            style: 'currency',
+            currency: 'DKK',
+            minimumFractionDigits: 2,  // Ensures 2 decimal points
+            maximumFractionDigits: 2   // Ensures 2 decimal points
+        });
+
+        document.getElementById("result").textContent = formattedResult;
+      })
+      .catch(err => {
+        document.getElementById("result").textContent = "Something went wrong!";
+        console.error(err);
+      });
+      fetchChartData(initial, monthly, rate, years);
+  }
 
     // Burger menu knap
     function toggleMenu() {
@@ -44,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
   menu.classList.toggle("hidden");
 }
 
-    
   
   // Denne funktion kalder på min Java Spring backend og får listen af yearly values og apsser dem videre til drawChart
   // funktionen som omdanner denne data til en graf.
@@ -55,10 +80,10 @@ document.addEventListener("DOMContentLoaded", function () {
             drawChart(data);
         });
 }
+
+
 // Denne funktion griber "canvas" elementet over i min HTML kode.
 // Dernæst laver den labels og benytter Chart.js til at tegne min graf
-
-
 // Jeg bruger den her fordi jeg gerne vil "ødelægge" nuærende graf hvis man nu inputter ny data
 let chartInstance = null;
 
@@ -102,31 +127,6 @@ function drawChart(data) {
     });
 }
 
-  function fetchData(initial, monthly, rate, years) {
-    // Encode the inputs
-    const initialEncoded = encodeURIComponent(initial);
-    const monthlyEncoded = encodeURIComponent(monthly);
-    const rateEncoded = encodeURIComponent(rate);
-  
-    fetch(`/api/invest?initial=${initialEncoded}&monthly=${monthlyEncoded}&rate=${rateEncoded}&years=${years}`)
-      .then(response => response.text())
-      .then(result => {
 
-        // Her formatteres resultater til DKK og der skabes både tusind og mio. separatere
-        const formattedResult = parseFloat(result).toLocaleString('da-DK', {
-            style: 'currency',
-            currency: 'DKK',
-            minimumFractionDigits: 2,  // Ensures 2 decimal points
-            maximumFractionDigits: 2   // Ensures 2 decimal points
-        });
-
-        document.getElementById("result").textContent = formattedResult;
-      })
-      .catch(err => {
-        document.getElementById("result").textContent = "Something went wrong!";
-        console.error(err);
-      });
-      fetchChartData(initial, monthly, rate, years);
-  }
   
 

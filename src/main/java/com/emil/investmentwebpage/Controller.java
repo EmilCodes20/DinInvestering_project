@@ -3,7 +3,9 @@ package com.emil.investmentwebpage;
 // Det her er altså hvor vi ligesom "griber" dataene og benytter logikken på den.
 // Ligeledes er det også her, vi "sender bolden retur" ved benytte vores logik i CalcInvestment
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Controller {
+    // Laver et objekt af min CalcInvestment klasse - Det er langt nemmere i Spring Boot
      @Autowired
     private CalcInvestment calcInvestment;
 
@@ -29,6 +32,8 @@ public class Controller {
                                       @RequestParam double monthly,
                                       @RequestParam double rate,
                                       @RequestParam int years) {
+        
+    
 
         return calcInvestment.calculateFutureValue(initial, monthly, rate, years);
         
@@ -44,5 +49,24 @@ public class Controller {
     return calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
     }
 
-    
+    // Laver et objekt af min AnnuityCalc
+    @Autowired
+    private AnnuityLoanCalc annuityLoanCalc;
+
+    // Denne griber lidt API requestet fra Javascript og dernæst kalder metoden for at beregne lånets tid.
+    @GetMapping("api/loan")
+    @ResponseBody
+    public Map<String, Object> annuityLoanCalc(@RequestParam double loan,
+    @RequestParam double monthly, @RequestParam double rate) {
+        double months = annuityLoanCalc.calculateTimeLeft(loan, monthly, rate);
+       
+        // Vi opretter et JSON objekt af vores respons
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalMonths",monthly);
+        response.put("years", (int) (months/12));
+        response.put("remainingMonths", (int) (months%12));
+        
+        return response;
+
+    }
 }
