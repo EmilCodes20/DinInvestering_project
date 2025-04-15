@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const elements = document.querySelectorAll('.fade');
+    elements.forEach(function(element) {
+      element.classList.add('fade-in');
+    });
+    
     const form = document.getElementById("loanForm");
     const errorMessage = document.getElementById("error-message");
   

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 // Denne klasse er den som beregner investeringen ud fra inputs
+// Bruges ikke rigtig mere da jeg bruger min Growth metode nu fordi den fungerer med json
 @Service
 public class CalcInvestment {
     // Denne metode bruges til at beregne FV af inputs. Det er det som er outputtet
@@ -20,6 +21,7 @@ public class CalcInvestment {
 
         return futureValue;
     }
+    
     // Beregner yearly growth som skal benyttes til at lave min graf
     public List<Double> getYearlyGrowth(double initial, double monthly, double rate, int years) {
     List<Double> yearlyValues = new ArrayList<>();

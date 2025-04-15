@@ -25,29 +25,23 @@ public class Controller {
         return "index.html";  // This points to src/main/resources/static/index.html
     }
 
-    // This handles the API call to calculate future investment value
-    @GetMapping("/api/invest")
+    @GetMapping("api/invest")
     @ResponseBody
-    public double calculateInvestment(@RequestParam double initial,
-                                      @RequestParam double monthly,
-                                      @RequestParam double rate,
-                                      @RequestParam int years) {
-        
+    public Map<String, Object> getInvestmentData(
+            @RequestParam double initial,
+            @RequestParam double monthly,
+            @RequestParam double rate,
+            @RequestParam int years) {
     
-
-        return calcInvestment.calculateFutureValue(initial, monthly, rate, years);
-        
-    }
-
+        List<Double> growth = calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
     
-    @GetMapping("/api/invest/growth")
-    @ResponseBody
-    public List<Double> getGrowthData(@RequestParam double initial,
-                                  @RequestParam double monthly,
-                                  @RequestParam double rate,
-                                  @RequestParam int years) {
-    return calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
+        Map<String, Object> response = new HashMap<>();
+        response.put("growth", growth);
+        response.put("finalAmount", growth.get(growth.size() - 1)); // Use the last value as future value
+    
+        return response;
     }
+    
 
     // Laver et objekt af min AnnuityCalc
     @Autowired

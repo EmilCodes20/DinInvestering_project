@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const elements = document.querySelectorAll('.fade');
+    elements.forEach(function(element) {
+      element.classList.add('fade-in');
+    });
+
     const form = document.getElementById("investmentForm");
     const errorMessage = document.getElementById("error-message");
   
@@ -33,54 +38,50 @@ document.addEventListener("DOMContentLoaded", function () {
       errorMessage.style.display = "none";
   
       // Her kalder vi calculate formlen
-      fetchData(initial, monthly, rate, years);
+      fetchData_investment(initial, monthly, rate, years);
     });
   });
 
-  function fetchData(initial, monthly, rate, years) {
-    // Encode the inputs
+  function fetchData_investment(initial, monthly, rate, years) {
     const initialEncoded = encodeURIComponent(initial);
     const monthlyEncoded = encodeURIComponent(monthly);
     const rateEncoded = encodeURIComponent(rate);
+    const yearsEncoded = encodeURIComponent(years);
   
-    fetch(`/api/invest?initial=${initialEncoded}&monthly=${monthlyEncoded}&rate=${rateEncoded}&years=${years}`)
-      .then(response => response.text())
-      .then(result => {
-
-        // Her formatteres resultater til DKK og der skabes både tusind og mio. separatere
-        const formattedResult = parseFloat(result).toLocaleString('da-DK', {
+    fetch(`/api/invest?initial=${initialEncoded}&monthly=${monthlyEncoded}&rate=${rateEncoded}&years=${yearsEncoded}`)
+      .then(response => response.json())
+      .then(data => {
+        // Now, both growth and finalAmount are in the response data
+        const growth = data.growth;
+        const finalAmount = data.finalAmount;
+        
+        // Format the data for display
+        console.log("Growth data:", growth);
+        console.log("Final Amount:", finalAmount);
+        
+        // Draw the chart with the growth data
+        drawChart(growth);  // Assuming you have a function to draw the chart with the growth data
+        
+        // Display the final amount formatted as currency
+        document.getElementById("result").textContent = finalAmount.toLocaleString('da-DK', {
             style: 'currency',
             currency: 'DKK',
-            minimumFractionDigits: 2,  // Ensures 2 decimal points
-            maximumFractionDigits: 2   // Ensures 2 decimal points
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         });
-
-        document.getElementById("result").textContent = formattedResult;
       })
       .catch(err => {
         document.getElementById("result").textContent = "Something went wrong!";
         console.error(err);
       });
-      fetchChartData(initial, monthly, rate, years);
-  }
+}
+
 
     // Burger menu knap
     function toggleMenu() {
   const menu = document.getElementById("menu");
   menu.classList.toggle("hidden");
 }
-
-  
-  // Denne funktion kalder på min Java Spring backend og får listen af yearly values og apsser dem videre til drawChart
-  // funktionen som omdanner denne data til en graf.
-  function fetchChartData(initial, monthly, rate, years) {
-    fetch(`/api/invest/growth?initial=${initial}&monthly=${monthly}&rate=${rate}&years=${years}`)
-        .then(response => response.json())
-        .then(data => {
-            drawChart(data);
-        });
-}
-
 
 // Denne funktion griber "canvas" elementet over i min HTML kode.
 // Dernæst laver den labels og benytter Chart.js til at tegne min graf
