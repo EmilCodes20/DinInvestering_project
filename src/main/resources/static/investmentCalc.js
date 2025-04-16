@@ -54,10 +54,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // Now, both growth and finalAmount are in the response data
         const growth = data.growth;
         const finalAmount = data.finalAmount;
+        const effectiveRateofReturn = data.effectiveRateofReturn
         
         // Format the data for display
         console.log("Growth data:", growth);
         console.log("Final Amount:", finalAmount);
+        console.log("Effective Rate of Return:", effectiveRateofReturn);
+    
         
         // Draw the chart with the growth data
         drawChart(growth);  // Assuming you have a function to draw the chart with the growth data
@@ -69,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         });
+      document.getElementById("effectiveRateofReturn").textContent = 
+        `Gennemsnitlig årlig vækst: ${effectiveRateofReturn.toFixed(2)}%`;
       })
       .catch(err => {
         document.getElementById("result").textContent = "Something went wrong!";

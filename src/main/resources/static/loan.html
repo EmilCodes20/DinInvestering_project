@@ -6,6 +6,7 @@
   <title>Din Investering</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -16,27 +17,27 @@
     <button id="burger-button" onclick="toggleMenu()">☰</button>
     <div id="menu" class="hidden">
       <ul>
-        <li><a href="/index.html">Startside</a></li>
+        <li><a href="/index.html">Investering</a></li>
         <li><a href="/loan.html">Lån</a></li>
-        <li><a href="/viden">Viden</a></li>
       </ul>
     </div>
   </div>
 
-  <form id="loanForm">
+  <div class="container">
+  <form class="fade" id="loanForm">
     <input type="number" id="loan" placeholder="Lån" />
     <input type="number" id="monthly" placeholder="Månedlige afdrag" />
     <input type="number" id="rate" placeholder="Rente (%)" step="0.01" min="0"/>
     
     <button type="submit"; id="calculateButton">Calculate</button>
+    <p id="result">0.00</p>
   </form>
+
 
   <div id="error-message" style="color: red; display: none;"></div>
   
-<div class="output-container">
-  <p id="result">0.00</p>
 </div>
-
   <script src="loanCalc.js"></script>
+
 </body>
 </html>

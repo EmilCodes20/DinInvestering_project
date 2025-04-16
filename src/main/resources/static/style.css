@@ -42,7 +42,7 @@ input[type="number"] {
   }
 
 /* Styling af input boksene */
-#investmentForm input, select, button {
+input, select, button {
     width: 100%;
     max-width: 300px;
     padding: 10px;
@@ -53,7 +53,7 @@ input[type="number"] {
     box-sizing: border-box;
   }
   
-  #investmentForm button {
+  button {
     background-color: #4F46E5; /* Indigo 600 */
     color: white;
     border: none;
@@ -61,7 +61,7 @@ input[type="number"] {
     transition: background-color 0.3s ease;
   }
   
-  #investmentForm button:hover {
+  button:hover {
     background-color: #4338CA; /* Indigo 700 on hover */
   }
 

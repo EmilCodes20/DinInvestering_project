@@ -34,10 +34,13 @@ public class Controller {
             @RequestParam int years) {
     
         List<Double> growth = calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
+        double totalInvested = initial + (monthly * 12 * years);
+        double effectiveRateofReturn = ((growth.get(growth.size() - 1) - totalInvested) / totalInvested) * 100;
     
         Map<String, Object> response = new HashMap<>();
         response.put("growth", growth);
         response.put("finalAmount", growth.get(growth.size() - 1)); // Use the last value as future value
+        response.put("effectiveRateofReturn", effectiveRateofReturn);
     
         return response;
     }
