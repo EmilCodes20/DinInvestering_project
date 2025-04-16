@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     elements.forEach(function(element) {
       element.classList.add('fade-in');
     });
-    
+
     const form = document.getElementById("loanForm");
     const errorMessage = document.getElementById("error-message");
   
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
   
-      // Hide any previous error
+
       errorMessage.style.display = "none";
   
       // Her kalder vi calculate formlen
@@ -49,9 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const menu = document.getElementById("menu");
   menu.classList.toggle("hidden");
 }
-
+// Meget samme logik som i InvestmentCalc.js
 function fetchData_loan(loan, monthly, rate) {
-    // Encode the inputs
+   
     const loanEncoded = encodeURIComponent(loan);
     const monthlyEncoded = encodeURIComponent(monthly);
     const rateEncoded = encodeURIComponent(rate);
@@ -59,12 +59,12 @@ function fetchData_loan(loan, monthly, rate) {
     fetch(`/api/loan?loan=${loanEncoded}&monthly=${monthlyEncoded}&rate=${rateEncoded}`)
       .then(response => response.json())
       .then(data => {
-        // Use the keys as returned from Java
+        
         const totalMonths = data.totalMonths;
         const years = data.years;
         const remainingMonths = data.remainingMonths;
         
-        // Format the output
+        // Her formatterer vi outputtet til at se pænt ud
         let formattedTime = "";
         if (years > 0) {
             formattedTime += `${years} år`;

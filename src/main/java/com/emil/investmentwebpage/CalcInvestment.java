@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 public class CalcInvestment {
     // Denne metode bruges til at beregne FV af inputs. Det er det som er outputtet
     public double calculateFutureValue(double initial, double monthly, double annualRate, int years) {
-        // Convert annual rate to monthly rate
+    
         double r = annualRate / 100 / 12;
         int months = years * 12;
 
-        // Future value formula
-        double futureValue = initial * Math.pow(1 + r, months);  // FV for initial investment
-        futureValue += monthly * ((Math.pow(1 + r, months) - 1) / r);  // FV for monthly payments
+       
+        double futureValue = initial * Math.pow(1 + r, months);
+        futureValue += monthly * ((Math.pow(1 + r, months) - 1) / r);
 
         return futureValue;
     }
-    
+
     // Beregner yearly growth som skal benyttes til at lave min graf
     public List<Double> getYearlyGrowth(double initial, double monthly, double rate, int years) {
     List<Double> yearlyValues = new ArrayList<>();

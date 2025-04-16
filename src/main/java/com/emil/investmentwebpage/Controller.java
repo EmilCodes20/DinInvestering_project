@@ -19,12 +19,13 @@ public class Controller {
      @Autowired
     private CalcInvestment calcInvestment;
 
-    // This handles the root request and returns the HTML page
+    // Denne håndterer root requestet og returnerer HTML startsiden
     @GetMapping("/")
     public String home() {
-        return "index.html";  // This points to src/main/resources/static/index.html
+        return "index.html";
     }
 
+    // Denne griber lidt API requestet fra Javascript og dernæst kalder metoden for at beregne FV
     @GetMapping("api/invest")
     @ResponseBody
     public Map<String, Object> getInvestmentData(
@@ -32,14 +33,27 @@ public class Controller {
             @RequestParam double monthly,
             @RequestParam double rate,
             @RequestParam int years) {
+
+            // Man kunne undre sig hvorfor den ikke skal være 0.2 men den dividere med 100 i min Calc klasse
+            double variance = 2.0;
     
-        List<Double> growth = calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
+        // Her laver jeg tre forskellige lister, da jeg gerne vil vise 3 forskellige grafer
+        List<Double> avgGrowth = calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
+        List<Double> bestCase = calcInvestment.getYearlyGrowth(initial, monthly, rate+variance, years);
+        List<Double> worstCase = calcInvestment.getYearlyGrowth(initial, monthly, rate-variance, years);
+
         double totalInvested = initial + (monthly * 12 * years);
-        double effectiveRateofReturn = ((growth.get(growth.size() - 1) - totalInvested) / totalInvested) * 100;
+        double effectiveRateofReturn = ((avgGrowth.get(avgGrowth.size() - 1) - totalInvested) / totalInvested) * 100;
     
+        // Vi samler det hele i et Hashmap objekt så vi kan returnere til JS som JSON
+        // Hash Map gemmer key-value i par, og når de bliver sendt via ResponseBody i Spring Boot vil det være i JSON.
         Map<String, Object> response = new HashMap<>();
-        response.put("growth", growth);
-        response.put("finalAmount", growth.get(growth.size() - 1)); // Use the last value as future value
+        response.put("avgGrowth", avgGrowth);
+        response.put("bestCase", bestCase);
+        response.put("worstCase", worstCase);
+
+
+        response.put("finalAmount", avgGrowth.get(avgGrowth.size() - 1));
         response.put("effectiveRateofReturn", effectiveRateofReturn);
     
         return response;

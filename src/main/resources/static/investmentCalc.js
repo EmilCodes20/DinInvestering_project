@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const errorMessage = document.getElementById("error-message");
   
     form.addEventListener("submit", function (event) {
-      event.preventDefault(); // prevent page reload
+      event.preventDefault(); // gør at siden ikke reloader
   
       // Henter værdierne som er input i HTML
       const initial = document.getElementById("initial").value;
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const rate = document.getElementById("rate").value;
       const years = document.getElementById("years").value;
   
-      // Validere de inputs der er lavet - jeg har selv valgt hvad jeg tænker er relevant
+      // Validere de inputs der er lavet - jeg har selv valgt hvad jeg tænker er relevant (den røde skrift)
 
       if (!initial) {
         errorMessage.textContent = "Venligst udfyld din initiale investering.";
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         monthly = 0;
       }
   
-      // Hide any previous error
+      // Sletter tidligere fejlmeddelser
       errorMessage.style.display = "none";
   
       // Her kalder vi calculate formlen
@@ -48,32 +48,43 @@ document.addEventListener("DOMContentLoaded", function () {
     const rateEncoded = encodeURIComponent(rate);
     const yearsEncoded = encodeURIComponent(years);
   
+    // Først sender vi dataene efter de er ended til vores Java backed
     fetch(`/api/invest?initial=${initialEncoded}&monthly=${monthlyEncoded}&rate=${rateEncoded}&years=${yearsEncoded}`)
+    // Når vi så får response fra serveren, så skal JS vide at det json
       .then(response => response.json())
+      // Og så kan vi så bearbejde dataene ift. hvordan outputtet skal se ud
       .then(data => {
-        // Now, both growth and finalAmount are in the response data
-        const growth = data.growth;
+      
+        const average = data.avgGrowth;
+        const best = data.bestCase;
+        const worst = data.worstCase;
+
         const finalAmount = data.finalAmount;
         const effectiveRateofReturn = data.effectiveRateofReturn
         
-        // Format the data for display
-        console.log("Growth data:", growth);
+        // Her formatterer vi dataene så er den kan vises i HTML
+        console.log("Avg Growth:", average);
+        console.log("Best Case:", best);
+        console.log("Worst Case:", worst);
+
         console.log("Final Amount:", finalAmount);
         console.log("Effective Rate of Return:", effectiveRateofReturn);
     
         
-        // Draw the chart with the growth data
-        drawChart(growth);  // Assuming you have a function to draw the chart with the growth data
+        // Her kalder vi vores graf function som tegner grafen ved hjælp af growth dataene
+        drawChart(average, best, worst);
         
-        // Display the final amount formatted as currency
+        // Den her er så hvad der kommer ind i HTML ved ID'et (såsom result)
+        // Og den formatterer det til danske kroner
         document.getElementById("result").textContent = finalAmount.toLocaleString('da-DK', {
             style: 'currency',
             currency: 'DKK',
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         });
+        // Her har vi så vores totale vækst af investeringen
       document.getElementById("effectiveRateofReturn").textContent = 
-        `Gennemsnitlig årlig vækst: ${effectiveRateofReturn.toFixed(2)}%`;
+        `% vækst af Investeringen: ${effectiveRateofReturn.toFixed(2)}%`;
       })
       .catch(err => {
         document.getElementById("result").textContent = "Something went wrong!";
@@ -88,14 +99,13 @@ document.addEventListener("DOMContentLoaded", function () {
   menu.classList.toggle("hidden");
 }
 
-// Denne funktion griber "canvas" elementet over i min HTML kode.
-// Dernæst laver den labels og benytter Chart.js til at tegne min graf
-// Jeg bruger den her fordi jeg gerne vil "ødelægge" nuærende graf hvis man nu inputter ny data
-let chartInstance = null;
 
-function drawChart(data) {
+
+let chartInstance = null;
+// Min drawchart funktion bruger chart.js til at lave grafen.
+// Dne benytter dataene som er grebet af min fetchData funktion som den har fået fra min Backend
+function drawChart(average, best, worst) {
     const ctx = document.getElementById('investmentChart').getContext('2d');
-    const labels = data.map((_, i) => i + 1);
 
     if (chartInstance !== null) {
         chartInstance.destroy();
@@ -104,11 +114,25 @@ function drawChart(data) {
     chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: labels,
+            labels: average.map((_, index) => index + 1),
             datasets: [{
-                label: 'Investering over tid',
-                data: data,
+                label: 'Gennemsnitlig',
+                data: average,
                 borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+                tension: 0.1
+            },
+            {
+                label: 'Bedste',
+                data: best,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                fill: false,
+                tension: 0.1
+            },
+            {
+                label: 'Værste',
+                data: worst,
+                borderColor: 'rgba(54, 162, 235, 1)',
                 fill: false,
                 tension: 0.1
             }]
