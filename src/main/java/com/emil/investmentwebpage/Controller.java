@@ -20,11 +20,6 @@ public class Controller {
      @Autowired
     private CalcInvestment calcInvestment;
 
-    // Denne håndterer root requestet og returnerer HTML startsiden
-    @GetMapping("/")
-    public String home() {
-        return "index.html";
-    }
 
     // Denne griber API requestet fra Javascript og dernæst kalder metoden for at beregne FV
     @GetMapping("api/invest")
