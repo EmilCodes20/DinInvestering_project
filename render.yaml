@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: investment-web-app
+    env: java
+    buildCommand: ./gradlew build
+    startCommand: java -jar build/libs/investmentwebpage-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    plan: free

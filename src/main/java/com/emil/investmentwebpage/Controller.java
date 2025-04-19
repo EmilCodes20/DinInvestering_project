@@ -3,6 +3,7 @@ package com.emil.investmentwebpage;
 // Det her er altså hvor vi ligesom "griber" dataene og benytter logikken på den.
 // Ligeledes er det også her, vi "sender bolden retur" ved benytte vores logik i CalcInvestment
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,4 +80,16 @@ public class Controller {
         return response;
 
     }
+
+    // Test med data fra Yahoo API
+    @Autowired
+    private FinanceService financeService;
+
+    @GetMapping("/api/top-etfs")
+    @ResponseBody
+    public List<ETFInfo> getTopEtfs() {
+    List<String> topEtfs = List.of("VOO", "SPY", "VTI", "QQQ", "IVV" /* ... */); // up to 50
+    return financeService.getTopEtfsInfo(topEtfs, 5); // 5 years CAGR
+}
+
 }
