@@ -9,21 +9,9 @@ import org.springframework.stereotype.Service;
 // Bruges ikke rigtig mere da jeg bruger min Growth metode nu fordi den fungerer med json
 @Service
 public class CalcInvestment {
-    // Denne metode bruges til at beregne FV af inputs. Det er det som er outputtet
-    public double calculateFutureValue(double initial, double monthly, double annualRate, int years) {
     
-        double r = annualRate / 100 / 12;
-        int months = years * 12;
-
-       
-        double futureValue = initial * Math.pow(1 + r, months);
-        futureValue += monthly * ((Math.pow(1 + r, months) - 1) / r);
-
-        return futureValue;
-    }
-
-    // Beregner yearly growth som skal benyttes til at lave min graf
-    public List<Double> getYearlyGrowth(double initial, double monthly, double rate, int years) {
+    // Denne metode bruges til at beregne FV af inputs. Det er det som er outputtet
+    public List<Double> calcFutureValue(double initial, double monthly, double rate, int years) {
     List<Double> yearlyValues = new ArrayList<>();
     double futureValue = initial;
     double monthlyRate = rate / 100 / 12;

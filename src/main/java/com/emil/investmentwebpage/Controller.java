@@ -25,7 +25,7 @@ public class Controller {
         return "index.html";
     }
 
-    // Denne griber lidt API requestet fra Javascript og dernæst kalder metoden for at beregne FV
+    // Denne griber API requestet fra Javascript og dernæst kalder metoden for at beregne FV
     @GetMapping("api/invest")
     @ResponseBody
     public Map<String, Object> getInvestmentData(
@@ -34,13 +34,13 @@ public class Controller {
             @RequestParam double rate,
             @RequestParam int years) {
 
-            // Man kunne undre sig hvorfor den ikke skal være 0.2 men den dividere med 100 i min Calc klasse
+            // Man kunne undre sig hvorfor den ikke skal være 0.2 men den dividerer med 100 i min Calc klasse
             double variance = 2.0;
     
         // Her laver jeg tre forskellige lister, da jeg gerne vil vise 3 forskellige grafer
-        List<Double> avgGrowth = calcInvestment.getYearlyGrowth(initial, monthly, rate, years);
-        List<Double> bestCase = calcInvestment.getYearlyGrowth(initial, monthly, rate+variance, years);
-        List<Double> worstCase = calcInvestment.getYearlyGrowth(initial, monthly, rate-variance, years);
+        List<Double> avgGrowth = calcInvestment.calcFutureValue(initial, monthly, rate, years);
+        List<Double> bestCase = calcInvestment.calcFutureValue(initial, monthly, rate+variance, years);
+        List<Double> worstCase = calcInvestment.calcFutureValue(initial, monthly, rate-variance, years);
 
         double totalInvested = initial + (monthly * 12 * years);
         double effectiveRateofReturn = ((avgGrowth.get(avgGrowth.size() - 1) - totalInvested) / totalInvested) * 100;
@@ -59,7 +59,6 @@ public class Controller {
         return response;
     }
     
-
     // Laver et objekt af min AnnuityCalc
     @Autowired
     private AnnuityLoanCalc annuityLoanCalc;

@@ -3,7 +3,7 @@ package com.emil.investmentwebpage;
 import org.springframework.stereotype.Service;
 
 
-// Denne klasse står for at beregne alt hvad har det med lånsiden at gøre.
+// Denne klasse står for at beregne tiden tilbage på et lån.
 // Den bliver kaldt af min controller ved at lave en instans af klasse så vi dermed har adgang til metoderne.
 
 @Service
