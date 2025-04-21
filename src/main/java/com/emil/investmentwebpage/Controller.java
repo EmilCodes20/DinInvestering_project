@@ -76,15 +76,5 @@ public class Controller {
 
     }
 
-    // Test med data fra Yahoo API
-    @Autowired
-    private FinanceService financeService;
-
-    @GetMapping("/api/top-etfs")
-    @ResponseBody
-    public List<ETFInfo> getTopEtfs() {
-    List<String> topEtfs = List.of("VOO", "SPY", "VTI", "QQQ", "IVV" /* ... */); // up to 50
-    return financeService.getTopEtfsInfo(topEtfs, 5); // 5 years CAGR
-}
 
 }

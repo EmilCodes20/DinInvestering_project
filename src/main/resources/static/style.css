@@ -88,44 +88,11 @@ input, select, button {
     margin-bottom: 20px;
   }
 
-  /* Style the burger button */
-  .burger-menu {
-    margin-top: 5px;  /* Pushes it nicely below h1/h2 */
-    padding: 5px;
-    border-radius: 6px;
-    background-color: #f4f4f9;
-  }
   
-  #burger-button {
-    font-size: 24px;
-    background-color: #f4f4f9;
-    color: black;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    text-align: left;
-  }
   
-  #menu {
-    margin-top: 10px;
-    background-color: #f4f4f9;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 6px;
-  }
+
   
-  #menu ul {
-    list-style: none;
-    background-color: #f4f4f9;
-    padding-left: 0;
-  }
-  
-  #menu li {
-    margin-bottom: 10px;
-    background-color: #f4f4f9;
-  }
-  
-  #menu a {
+  a {
     background-color: #f4f4f9;
     text-decoration: none;
     color: #333;
